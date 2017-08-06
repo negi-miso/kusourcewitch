@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hello WebSocket</title>
+<link rel="stylesheet" type="text/css" href="/stylesheets/switch.css" />
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/sockjs-client/sockjs.js}"></script>
+<script th:src="@{/webjars/stomp-websocket/stomp.js}"></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/push.js/0.0.11/push.min.js"></script>
+<script type="text/javascript">
+  $(function() {
+
+    Push.Permission.request();
+
+    $('#status').hide();
+
+    $("#connect").click(function() {
+      var socket = new SockJS('/socket'); // WebSocketに接続
+      stompClient = Stomp.over(socket);
+      stompClient.connect({}, function(frame) {
+        setConnected(true);
+        console.log('Connected: ' + frame);
+        stompClient.subscribe('/topic/greetings', function(bean) { // 挨拶の応答(/topic/greetings)を購読する
+          showLog(bean);
+        });
+      });
+    });
+
+    $("#disconnect").click(function() {
+      if (stompClient != null) {
+        stompClient.disconnect();
+      }
+      setConnected(false);
+      console.log("Disconnected");
+    });
+
+    $("#PushTest").click(function() {
+      push('http://www.google.co.jp/');
+    });
+
+    $("#SendDummy").click(function() {
+      stompClient.send("/app/socket");
+    });
+
+    $("#clear").click(function() {
+      $('table#resultTable *').remove();
+    });
+
+    function setConnected(connected) {
+      $('#connect').prop('disabled', connected);
+      $('#disconnect').prop('disabled', !connected);
+      $('#SendDummy').prop('disabled', !connected);
+      if (!connected) {
+        $('#status').hide();
+      } else {
+        $('#status').show();
+      }
+    }
+
+    function disconnect() {
+      if (stompClient != null) {
+        stompClient.disconnect();
+      }
+      setConnected(false);
+      console.log("Disconnected");
+    }
+
+    function showLog(bean) {
+      //var response = document.getElementById('response');
+
+      if ($('#resultTable tr').length >= 50) {
+        $('table#resultTable tr:last').remove();
+      }
+
+      var name = JSON.parse(bean.body).shopName;
+      var date = JSON.parse(bean.body).dateStr;
+      var flg = JSON.parse(bean.body).saleFlg;
+      var url = JSON.parse(bean.body).url;
+      var status = JSON.parse(bean.body).httpStatus;
+      var memo = JSON.parse(bean.body).memo;
+
+      $('#resultTable').prepend(
+          '<tr><td><a href="javascript:window.open(\'' + url + '\');">' + name
+              + '</a></td><td>' + date + '</td><td>' + flg + '</td><td>'
+              + status + '</td><td>' + memo + '</td></tr>')
+
+      if (flg) {
+        push(url);
+      }
+    }
+
+    function push(url) {
+      new Audio('se.mp3').play();
+      Push.create('更新のお知らせ', {
+        body : url,
+        icon : 'icon.png',
+        timeout : 8000, // 通知が消えるタイミング
+        vibrate : [ 100, 100, 100 ], // モバイル端末でのバイブレーション秒数
+        onClick : function() {
+          // 通知がクリックされた場合の設定
+          window.open(url);
+        }
+      });
+    }
+  });
+</script>
+</head>
+<body>
+  <noscript>
+    <h2 style="color: #ff0000">Seems your browser doesn't support
+      Javascript! Websocket relies on Javascript being enabled. Please
+      enable Javascript and reload this page!</h2>
+  </noscript>
+  <div>
+    <div>
+      <button id="connect">Connect</button>
+      <button id="disconnect" disabled="disabled">Disconnect</button>
+      <label id="status">接続中</label>
+    </div>
+    <div>
+      <button id="PushTest">PushTest</button>
+      <button id="SendDummy" disabled="disabled">SendDummy</button>
+      <button id="clear">Clear</button>
+    </div>
+
+    <!-- 外枠 -->
+    <div class="y_data_area">
+      <!-- タイトル -->
+      <table class="y_data_title">
+        <col style="width: 20%;" />
+        <col style="width: 10%;" />
+        <col style="width: 5%;" />
+        <col style="width: 20%;" />
+        <col style="width: 45%;" />
+        <tr>
+          <th>店名</th>
+          <th>時刻</th>
+          <th>有無</th>
+          <th>ステータスコード</th>
+          <th class="r_none">メモ</th>
+        </tr>
+      </table>
+      <!-- /タイトル -->
+      <!-- データ -->
+      <div class="y_scroll_box">
+        <div class="y_hidden">
+          <table id="resultTable" class="y_data">
+            <col style="width: 20%;" />
+            <col style="width: 10%;" />
+            <col style="width: 5%;" />
+            <col style="width: 20%;" />
+            <col style="width: 45%;" />
+          </table>
+        </div>
+      </div>
+      <!-- /データ -->
+    </div>
+    <!-- /外枠 -->
+
+    <div>
+      <h1>概要：</h1>
+      <p>
+        websocket使ってみました。<br> サーバサイドにＤＢはありません、処理結果をダイレクトに返却します<br>
+        "Connect"ボタンで接続してブラウザ起動してれば有無がtrueの時に通知が来ます。<br>
+        通知のイメージは"PushTest"押して確認してください<br> <br>
+        表は上にあるものほど新しく、50件以上蓄積された際は古いレコードから消すようにしてます。<br>
+        通知が来たからと言って在庫があるとは限りません（説明参照）<br>
+      </p>
+      <h1>説明：</h1>
+      <p>
+        各チェックロジックの説明<br> <br> <s>
+          ニンテンドー:該当ページで非表示にされてるHAC_S_KAYAA(switch本体)の在庫があればtrue<br>
+          AMAZON:該当ページの先頭行、"販売/出品"の先頭行がAMAZONならtrue<br>
+          楽天:該当ページにて、"ご注文できない商品*"以外のステータスが登場すればtrue。<br>
+          ヨドバシ:該当ページにて、"予定数の販売を終了しました"、"予約受付を終了しました"以外のステータスが登場すればtrue。<br>
+          トイザらス:該当ページにてカートに入れるボタンが登場すればtrue<br>
+        </s> ヨドバシは海外アクセス弾いてるっぽいし、なんかもう無茶苦茶なのでいろいろいじり中
+      </p>
+    </div>
+
+  </div>
+</body>
+</html>
