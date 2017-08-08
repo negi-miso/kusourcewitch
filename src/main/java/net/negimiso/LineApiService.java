@@ -14,8 +14,8 @@ import retrofit2.Response;
 @Service
 public class LineApiService {
 
-    public void push() throws IOException {
-        TextMessage textMessage = new TextMessage("サーバーから送付されるテストメッセージ");
+    public void push(ShopInfoBean bean) throws IOException {
+        TextMessage textMessage = new TextMessage(bean.getShopName() + "にて動きがあったようです\r\n" + bean.getUrl());
         PushMessage pushMessage = new PushMessage(
                 "R914f2f6ed6a4f12f9e9e69bfdc4afcd9",
                 textMessage);

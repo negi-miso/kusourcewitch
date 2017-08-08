@@ -89,7 +89,7 @@ public class SwitchCheckerApplication {
         bean.setDateStr(sdf.format(bean.getDate()));
         bean.setMemo("誰かのいたずら");
         try {
-            lineService.push();
+            lineService.push(bean);
         } catch (IOException e) {
             // TODO 自動生成された catch ブロック
             e.printStackTrace();
@@ -150,7 +150,7 @@ public class SwitchCheckerApplication {
         ShopInfoBean bean = new ShopInfoBean();
         bean.setMemo("ネオンブルー");
         bean.setShopName(Static.RAKUTEN);
-        bean.setUrl(Static.RAKUTEN_URL);
+        bean.setUrl(Static.RAKUTEN_URL2);
         bean.setSaleFlg(false);
         shopService.check(bean);
     }
