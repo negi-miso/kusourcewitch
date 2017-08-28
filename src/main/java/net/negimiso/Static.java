@@ -14,8 +14,8 @@ public class Static {
     static final String RAKUTEN = "楽天ブックス";
     static final String RAKUTEN_URL = "http://ts.books.rakuten.co.jp/rb/14647221/";
     static final String RAKUTEN_URL2 = "http://ts.books.rakuten.co.jp/rb/14647222/";
-//    static final String TOYSRUS = "トイザらス";
-//    static final String TOYSRUS_URL = "https://www.toysrus.co.jp/s/dsg-572182200";
+    //    static final String TOYSRUS = "トイザらス";
+    //    static final String TOYSRUS_URL = "https://www.toysrus.co.jp/s/dsg-572182200";
 
     static final String DUMMY = "DUMMY";
     static final String DUMMY_URL = "https://www.google.co.jp/";
