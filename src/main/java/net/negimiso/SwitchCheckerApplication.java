@@ -155,15 +155,15 @@ public class SwitchCheckerApplication {
         shopService.check(bean);
     }
 
-    @Scheduled(fixedDelay = 10000)
-    public void toysrus() throws InterruptedException, IOException {
-        ShopInfoBean bean = new ShopInfoBean();
-        bean.setMemo("グレー");
-        bean.setShopName(Static.TOYSRUS);
-        bean.setUrl(Static.TOYSRUS_URL);
-        bean.setSaleFlg(false);
-        shopService.check(bean);
-    }
+    //    @Scheduled(fixedDelay = 10000)
+    //    public void toysrus() throws InterruptedException, IOException {
+    //        ShopInfoBean bean = new ShopInfoBean();
+    //        bean.setMemo("グレー");
+    //        bean.setShopName(Static.TOYSRUS);
+    //        bean.setUrl(Static.TOYSRUS_URL);
+    //        bean.setSaleFlg(false);
+    //        shopService.check(bean);
+    //    }
 
     // @Scheduled(fixedDelay = 5000)
     // public void dummy() throws InterruptedException, IOException {

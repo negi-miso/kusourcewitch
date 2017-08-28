@@ -38,9 +38,9 @@ public class ShopCheckService {
 			case Static.RAKUTEN:
 				bean = rakuten(doc, bean);
 				break;
-			case Static.TOYSRUS:
-				bean = toysrus(doc, bean);
-				break;
+//			case Static.TOYSRUS:
+//				bean = toysrus(doc, bean);
+//				break;
 			case Static.DUMMY:
 				break;
 			default:
