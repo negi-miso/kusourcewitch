@@ -26,9 +26,9 @@ public class ShopCheckService {
 
         if (doc != null) {
             switch (bean.getShopName()) {
-            case Static.NINTENDO:
-                bean = nintendo(doc, bean);
-                break;
+            //            case Static.NINTENDO:
+            //                bean = nintendo(doc, bean);
+            //                break;
             case Static.AMAZON:
                 bean = amazon(doc, bean);
                 break;
