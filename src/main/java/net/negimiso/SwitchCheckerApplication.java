@@ -115,15 +115,15 @@ public class SwitchCheckerApplication {
         shopService.check(bean);
     }
 
-    @Scheduled(fixedDelay = 10000)
-    public void amazon2() throws InterruptedException, IOException {
-        ShopInfoBean bean = new ShopInfoBean();
-        bean.setMemo("スプラプロコン");
-        bean.setShopName(Static.AMAZON);
-        bean.setUrl(Static.AMAZON_URL_PROCON);
-        bean.setSaleFlg(false);
-        shopService.check(bean);
-    }
+    //    @Scheduled(fixedDelay = 10000)
+    //    public void amazon2() throws InterruptedException, IOException {
+    //        ShopInfoBean bean = new ShopInfoBean();
+    //        bean.setMemo("スプラプロコン");
+    //        bean.setShopName(Static.AMAZON);
+    //        bean.setUrl(Static.AMAZON_URL_PROCON);
+    //        bean.setSaleFlg(false);
+    //        shopService.check(bean);
+    //    }
 
     @Scheduled(fixedDelay = 10000)
     public void yodobashi() throws InterruptedException, IOException {
@@ -145,15 +145,15 @@ public class SwitchCheckerApplication {
         shopService.check(bean);
     }
 
-    @Scheduled(fixedDelay = 10000)
-    public void yodobashi3() throws InterruptedException, IOException {
-        ShopInfoBean bean = new ShopInfoBean();
-        bean.setMemo("スプラプロコン");
-        bean.setShopName(Static.YODOBASHI);
-        bean.setUrl(Static.YODOBASHI_URL_PROCON);
-        bean.setSaleFlg(false);
-        shopService.check(bean);
-    }
+    //    @Scheduled(fixedDelay = 10000)
+    //    public void yodobashi3() throws InterruptedException, IOException {
+    //        ShopInfoBean bean = new ShopInfoBean();
+    //        bean.setMemo("スプラプロコン");
+    //        bean.setShopName(Static.YODOBASHI);
+    //        bean.setUrl(Static.YODOBASHI_URL_PROCON);
+    //        bean.setSaleFlg(false);
+    //        shopService.check(bean);
+    //    }
 
     @Scheduled(fixedDelay = 10000)
     public void rakuten() throws InterruptedException, IOException {
@@ -175,15 +175,15 @@ public class SwitchCheckerApplication {
         shopService.check(bean);
     }
 
-    @Scheduled(fixedDelay = 10000)
-    public void rakuten3() throws InterruptedException, IOException {
-        ShopInfoBean bean = new ShopInfoBean();
-        bean.setMemo("スプラプロコン");
-        bean.setShopName(Static.RAKUTEN);
-        bean.setUrl(Static.RAKUTEN_URL_PROCON);
-        bean.setSaleFlg(false);
-        shopService.check(bean);
-    }
+    //    @Scheduled(fixedDelay = 10000)
+    //    public void rakuten3() throws InterruptedException, IOException {
+    //        ShopInfoBean bean = new ShopInfoBean();
+    //        bean.setMemo("スプラプロコン");
+    //        bean.setShopName(Static.RAKUTEN);
+    //        bean.setUrl(Static.RAKUTEN_URL_PROCON);
+    //        bean.setSaleFlg(false);
+    //        shopService.check(bean);
+    //    }
 
     //    @Scheduled(fixedDelay = 10000)
     //    public void toysrus() throws InterruptedException, IOException {
