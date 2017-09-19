@@ -78,8 +78,10 @@ public class SwitchCheckerApplication {
         return "switch";
     }
 
-    @MessageMapping("/socket") // エンドポイントの指定
-    @SendTo("/topic/greetings") // メッセージの宛先を指定
+    @MessageMapping("/socket")
+    // エンドポイントの指定
+    @SendTo("/topic/greetings")
+    // メッセージの宛先を指定
     public ShopInfoBean greeting() {
         ShopInfoBean bean = new ShopInfoBean();
         bean.setShopName(Static.DUMMY);
@@ -88,12 +90,12 @@ public class SwitchCheckerApplication {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         bean.setDateStr(sdf.format(bean.getDate()));
         bean.setMemo("誰かのいたずら");
-        try {
-            lineService.push(bean);
-        } catch (IOException e) {
-            // TODO 自動生成された catch ブロック
-            e.printStackTrace();
-        }
+        //        try {
+        //            lineService.push(bean);
+        //        } catch (IOException e) {
+        //            // TODO 自動生成された catch ブロック
+        //            e.printStackTrace();
+        //        }
         return bean;
     }
 
@@ -112,6 +114,17 @@ public class SwitchCheckerApplication {
         bean.setShopName(Static.AMAZON);
         bean.setUrl(Static.AMAZON_URL);
         bean.setSaleFlg(false);
+        bean.setMemo("ファミコン");
+        shopService.check(bean);
+    }
+
+    @Scheduled(fixedDelay = 10000)
+    public void amazon2() throws InterruptedException, IOException {
+        ShopInfoBean bean = new ShopInfoBean();
+        bean.setShopName(Static.AMAZON);
+        bean.setUrl(Static.AMAZON_URL2);
+        bean.setSaleFlg(false);
+        bean.setMemo("スーパーファミコン");
         shopService.check(bean);
     }
 
@@ -125,25 +138,25 @@ public class SwitchCheckerApplication {
     //        shopService.check(bean);
     //    }
 
-    @Scheduled(fixedDelay = 10000)
-    public void yodobashi() throws InterruptedException, IOException {
-        ShopInfoBean bean = new ShopInfoBean();
-        bean.setMemo("グレー");
-        bean.setShopName(Static.YODOBASHI);
-        bean.setUrl(Static.YODOBASHI_URL);
-        bean.setSaleFlg(false);
-        shopService.check(bean);
-    }
-
-    @Scheduled(fixedDelay = 10000)
-    public void yodobashi2() throws InterruptedException, IOException {
-        ShopInfoBean bean = new ShopInfoBean();
-        bean.setMemo("ネオンブルー");
-        bean.setShopName(Static.YODOBASHI);
-        bean.setUrl(Static.YODOBASHI_URL2);
-        bean.setSaleFlg(false);
-        shopService.check(bean);
-    }
+    //    @Scheduled(fixedDelay = 10000)
+    //    public void yodobashi() throws InterruptedException, IOException {
+    //        ShopInfoBean bean = new ShopInfoBean();
+    //        bean.setMemo("グレー");
+    //        bean.setShopName(Static.YODOBASHI);
+    //        bean.setUrl(Static.YODOBASHI_URL);
+    //        bean.setSaleFlg(false);
+    //        shopService.check(bean);
+    //    }
+    //
+    //    @Scheduled(fixedDelay = 10000)
+    //    public void yodobashi2() throws InterruptedException, IOException {
+    //        ShopInfoBean bean = new ShopInfoBean();
+    //        bean.setMemo("ネオンブルー");
+    //        bean.setShopName(Static.YODOBASHI);
+    //        bean.setUrl(Static.YODOBASHI_URL2);
+    //        bean.setSaleFlg(false);
+    //        shopService.check(bean);
+    //    }
 
     //    @Scheduled(fixedDelay = 10000)
     //    public void yodobashi3() throws InterruptedException, IOException {
@@ -158,22 +171,21 @@ public class SwitchCheckerApplication {
     @Scheduled(fixedDelay = 10000)
     public void rakuten() throws InterruptedException, IOException {
         ShopInfoBean bean = new ShopInfoBean();
-        bean.setMemo("グレー");
         bean.setShopName(Static.RAKUTEN);
         bean.setUrl(Static.RAKUTEN_URL);
         bean.setSaleFlg(false);
         shopService.check(bean);
     }
 
-    @Scheduled(fixedDelay = 10000)
-    public void rakuten2() throws InterruptedException, IOException {
-        ShopInfoBean bean = new ShopInfoBean();
-        bean.setMemo("ネオンブルー");
-        bean.setShopName(Static.RAKUTEN);
-        bean.setUrl(Static.RAKUTEN_URL2);
-        bean.setSaleFlg(false);
-        shopService.check(bean);
-    }
+    //    @Scheduled(fixedDelay = 10000)
+    //    public void rakuten2() throws InterruptedException, IOException {
+    //        ShopInfoBean bean = new ShopInfoBean();
+    //        bean.setMemo("ネオンブルー");
+    //        bean.setShopName(Static.RAKUTEN);
+    //        bean.setUrl(Static.RAKUTEN_URL2);
+    //        bean.setSaleFlg(false);
+    //        shopService.check(bean);
+    //    }
 
     //    @Scheduled(fixedDelay = 10000)
     //    public void rakuten3() throws InterruptedException, IOException {
